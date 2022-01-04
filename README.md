@@ -60,3 +60,13 @@ $$
 det(H) = D_{xx}D_{yy} - (\omega D_{xy})^2 > T
 $$
 <br>Where T is the selected threshold; ω is the compensation factor. In order to ensure the uniformity of the discriminant, ω is generally taken as 0 for different σ values and template sizes.
+
+2. Feature point description:<br>
+Centering on the feature points, calculate the Harr wavelet response in the horizontal and vertical directions of the points in the neighborhood with a radius of 6s (s is the scale value at which the feature points are located). The sum of the wavelet responses in the 60◦ sector window is counted, and the direction corresponding to the sector with the largest value is the main direction dx and dy are the horizontal and vertical wavelet responses, respectively, and w is the sector area. The corresponding direction of the area is calculated as follows.Feature point description: Centering on the feature points, calculate the Harr wavelet response in the horizontal and vertical directions of the points in the neighborhood with a radius of 6s (s is the scale value at which the feature points are located). The sum of the wavelet responses in the 60◦ sector window is counted, and the direction corresponding to the sector with the largest value is the main direction dx and dy are the horizontal and vertical wavelet responses, respectively, and w is the sector area. The corresponding direction of the area is calculated as follows.
+$$
+\theta_{\omega} = \arctan{\sum_{\omega}{dx}/\sum_{\omega}{dy}}
+$$
+<br>Centering on the feature points, divide the 20s × 20s image into 4 × 4 sub-blocks in the main direction, and calculate $\sum{dx}$, $\sum{dy}$, $\sum{|dx|}$ and $\sum{|dy|}$ in each sub-area to generate a 64–dimension feature description.
+
+3. Feature point matching:<br>
+A certain feature point F1i in the source image 1 and all the feature points in the source image 2 are first judged by the Hessian matrix trace. If the traces are in the same direction, the Euclidean distance between the two feature point descriptors is calculated. To the next point of comparison, the closest feature point in the source image 2 to the Euclidean distance is the best matching point of F1i.
