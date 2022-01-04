@@ -116,3 +116,9 @@ SURF|67|18.4|84
     └── output
     	└── dst.jpg
 ```
+
+## Quick Start
+### SIFT
+run Pro2_main.m
+### SURF
+run Pro2.cpp
