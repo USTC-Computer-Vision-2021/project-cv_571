@@ -70,3 +70,21 @@ $$
 
 3. Feature point matching:<br>
 A certain feature point F1i in the source image 1 and all the feature points in the source image 2 are first judged by the Hessian matrix trace. If the traces are in the same direction, the Euclidean distance between the two feature point descriptors is calculated. To the next point of comparison, the closest feature point in the source image 2 to the Euclidean distance is the best matching point of F1i.
+
+## Code Implementation and Results
+The SIFT algorithm runs on the MATLAB platform and the SURF algorithm is based on the C++ implementation of the OpenCV library, respectively.<br>
+The two original images are shown in the Fig. 1 and Fig. 2.<br>
+<p align='center'><img src='./matlab/34.jpg' style='zoom:25%;'></br>Fig. 1</p>
+<p align='center'><img src='./matlab/35.jpg' style='zoom:25%;'></br>Fig. 2</p>
+
+### SIFT
+Here we use SIFT to extract the feature points of gray image, and obtain the position information and feature description of the feature points. According to the feature description of the feature points, the correlation is obtained and the threshold is set to 0.9. A feature point pair having a correlation greater than the threshold satisfies the condition of feature point matching.<br>
+Using the histogram drawing function hist(X, n) in MATLAB, the distribution of the feature points to the rotation angle (the amplitude is from 0◦ to 180◦ is obtained, and a certain number of feature point pairs are selected from the range of angle values with the largest number of points. In the solution of the transfer matrix T, the final image stitching work is completed. The registration result is shown in the Fig. 3.<br>
+<p align='center'><img src='./matlab/output.jpg' style='zoom:25%;'></br>Fig. 3: Registration result based on SIFT algorithm</p>
+It can be seen from the registration result that the SIFT algorithm can achieve better image mosaic, but the edge of the image is not natural enough and needs further improvement.
+
+### SURF
+The SURF feature extraction algorithm is used to replace the above SIFT feature extraction, and the image fusion technology is added to make the transition of the interface more natural. Like the SIFT algorithm, the basic path of the Surf algorithm can be divided into three parts: the extraction of local feature points, the description of feature points, and the matching of feature points. The C++ implementation based on Opencv library achieves the ideal effect. The feature matching based on SURF algorithm is shown in the Fig. 4, in addition, the registration result is shown in the Fig. 5.<br>
+<p align='center'><img src='./opencv/first_match.jpg' style='zoom:25%;'></br>Fig. 4: Feature matching based on SURF algorithm</p>
+<p align='center'><img src='./opencv/dst.jpg' style='zoom:25%;'></br>Fig. 5: Registration result based on SURF algorithm</p>
+The SURF–based registration algorithm has achieved excellent results and is intuitively better than SIFT–based algorithm which can be seen from the above figures. Furthermore, this report makes a quantitative comparison of the two algorithms. Table I gives the number of features extracted by the two algorithms. It can be seen from the Table I that the SURF algorithm achieves faster (Related to the implementation tool) image registration and requires fewer feature matching points. However, both algorithms achieve high accuracy.<br>
