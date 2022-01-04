@@ -8,3 +8,34 @@ Image stitching technology is to stitch several images of ordered and repeated a
 
 ## Theory Analysis
 We will use two classic feature–based image registration algorithms, SIFT and SURF.
+
+### SIFT
+SIFT (Scale Invariant Feature Transform) feature matching algorithm is a highly robust local feature descriptor that uses images produced by SIFT. The performance of eigenvectors is stable, for rotation, scaling, target occlusion, noise, etc. It has good immutability. Feature extraction mainly includes four steps.
+
+1. Scale space extreme value detection:<br>
+First, Gaussian difference tower pyramid is applied to the image to obtain a Gaussian difference image. The Gaussian difference image is then subjected to key point detection in a multi–scale range. The scale space G(x, y, σ) can be obtained by convolving the Gaussian function L(x, y, σ) with the original image.<br>
+$$
+L(x,y,\sigma) = G(x,y,\sigma) \times I(x,y)
+$$
+<br>where I(x,y) is the original image, G(x,y,σ) is a scale variable Gaussian function whose expression is as follows.<br>
+$$
+G(x,y,\sigma) = \frac{1}{2\pi\sigma^2}e^{-(x^2+y^2)/2\sigma^2}
+$$
+<br>The Gaussian difference scale space (DoG) is produced by convolving the Gaussian convolution kernels with different scales.<br>
+$$
+D(x,y,\sigma) = L(x,y,k\sigma) - L(x,y,\sigma)
+$$
+<br>When performing extreme value detection in the DoG space, it is necessary to compare the key points with 9 × 2 points of eight adjacent and upper and lower adjacent scales of the same scale, for a total of 26 points. If the key point is in the DoG scale space, the maximum and minimum of the 26 layers of the layer and the adjacent layers, then the point can be used as a feature point of the image.
+
+2. Accurate positioning of feature points:<br>
+After obtaining a large number of candidate feature points of the image, the three–dimensional quadratic function is fitted to accurately determine the position and scale of the key points, while removing the low-contrast key points and the unstable edge response points to enhance the matching stability and improve the resistance, noise capacity.
+
+3. Character point direction calibration:<br>
+Using the local properties of the image, the gradient distribution characteristics of the pixels in the key point domain are used to specify the direction parameters for each key point, thereby ensuring that the operator has rotation invariance. The gradient magnitude at a pixel (x, y) in an image can be expressed by L(x, y).At the same time, the direction of the pixel (x,y) can be expressed as<br>
+$$
+\theta(x,y) = \tan^{-1} \frac{L(x,y+1) - L(x,y-1)}{L(x+1,y) - L(x-1,y)}
+$$
+<br>With these size and orientation data, you can create a direction histogram so you can calculate the dominant direction of each key point.
+
+4. Generation of feature descriptors:<br>
+The characterization descriptor can be uniquely characterized by the gradient and direction of all points in the Gaussian window region. The 16 × 16 neighborhood around each key point is divided into sixteen 4 × 4 sub-regions, and then an 8–direction histogram is calculated and generated in each 4 × 4 sub–region. By performing the above calculation on all sub–regions of the key point, a 4 × 4 × 8 = 128 dimensional feature vector (SIFT descriptor) can be generated. Each key point can be uniquely determined by its feature vector.
