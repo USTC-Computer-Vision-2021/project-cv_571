@@ -88,3 +88,31 @@ The SURF feature extraction algorithm is used to replace the above SIFT feature 
 <p align='center'><img src='./opencv/first_match.jpg' style='zoom:25%;'></br>Fig. 4: Feature matching based on SURF algorithm</p>
 <p align='center'><img src='./opencv/dst.jpg' style='zoom:25%;'></br>Fig. 5: Registration result based on SURF algorithm</p>
 The SURF–based registration algorithm has achieved excellent results and is intuitively better than SIFT–based algorithm which can be seen from the above figures. Furthermore, this report makes a quantitative comparison of the two algorithms. Table I gives the number of features extracted by the two algorithms. It can be seen from the Table I that the SURF algorithm achieves faster (Related to the implementation tool) image registration and requires fewer feature matching points. However, both algorithms achieve high accuracy.<br>
+TABLE I: Comparison of SIFT and SURF
+
+Algorithm|Feature points|Time|Accuracy rate(%)
+---------|--------------|-----|-----------------
+SIFT|594|126|81
+SURF|67|18.4|84
+
+## Code Structure
+```
+.
+├── README.md
+├── matlab
+│   ├── code
+│   │   └── Pro2_main.m
+│   ├── input
+│   │   ├── 34.jpg
+│   │   └── 35.jpg
+│   └── output
+│       └── output.jpg
+└── opencv
+    ├── code
+    │	└── Pro2.cpp
+    ├── input
+    │	├── 1.jpg
+    │	└── 2.jpg
+    └── output
+    	└── dst.jpg
+```
