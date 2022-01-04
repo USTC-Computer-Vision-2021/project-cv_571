@@ -39,3 +39,24 @@ $$
 
 4. Generation of feature descriptors:<br>
 The characterization descriptor can be uniquely characterized by the gradient and direction of all points in the Gaussian window region. The 16 × 16 neighborhood around each key point is divided into sixteen 4 × 4 sub-regions, and then an 8–direction histogram is calculated and generated in each 4 × 4 sub–region. By performing the above calculation on all sub–regions of the key point, a 4 × 4 × 8 = 128 dimensional feature vector (SIFT descriptor) can be generated. Each key point can be uniquely determined by its feature vector.
+
+### SURF
+Speeded Up Robust Features (SURF) is a robust local feature point detection and description algorithm. SURF is an improvement of the Sift algorithm, which improves the exe- cution efficiency of the algorithm and provides the possibility for the algorithm to be applied in real–time computer vision systems. SURF has two great magics in terms of execution efficiency, one is the use of integral graphs on Hessian, and the other is the use of dimensionality descriptors.
+
+1. Feature point extraction:<br>
+The SURF algorithm uses Gaussian filtering to construct image pyramids and obtain image sequences in different scale spaces. Let the original image be I(x,y), and the image sequence of different scale spaces obtained by Gaussian convolution is L(x, y, σ), and σ is the image scale. Then calculate the Hessian matrix is as follows.<br>
+$$
+H(x,\sigma) = {
+\left[
+\begin{matrix}
+L_{xx}(x,y,\sigma) & L_{xy}(x,y,\sigma) \\
+L_{xy}(x,y,\sigma) & L_{yy}(x,y,\sigma) \\
+\end{matrix}
+\right]}
+$$
+<br>Where $L_{xx}(x,y,\sigma)$ is the convolution of Gaussian second-order differential at x with image 1, $L_{xx}(x,y,\sigma)$ is the same as $L_{yy}(x,y,\sigma)$.<br>
+In digital images, Dxx, Dxy and Dyy are used to approximate Lxx, Lxy and Lyy, respectively, to construct a fast Hessian matrix discriminant to extract local maxima and determine the location of key points. The fast Hessian matrix is judged as<br>
+$$
+det(H) = D_{xx}D_{yy} - (\omega D_{xy})^2 > T
+$$
+<br>Where T is the selected threshold; ω is the compensation factor. In order to ensure the uniformity of the discriminant, ω is generally taken as 0 for different σ values and template sizes.
